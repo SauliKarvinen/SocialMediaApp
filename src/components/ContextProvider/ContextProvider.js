@@ -16,6 +16,13 @@ export const ContextProvider = ({ children }) => {
   // custom styles for typograhpy
   const typographyThemes = createTheme({
     typography: {
+      h2: {
+        fontSize: "1.4rem",
+        color: "black",
+        [theme.breakpoints.down("sm")]: {
+          fontSize: "1.2rem",
+        },
+      },
       h3: {
         fontSize: "2.3rem",
         [theme.breakpoints.down("sm")]: {
@@ -44,6 +51,14 @@ export const ContextProvider = ({ children }) => {
         fontSize: "1.2rem",
         [theme.breakpoints.down("sm")]: {
           fontSize: "1rem",
+        },
+      },
+
+      body4: {
+        fontSize: "1rem",
+        color: theme.palette.secondary.main,
+        [theme.breakpoints.down("sm")]: {
+          fontSize: "0.9rem",
         },
       },
     },

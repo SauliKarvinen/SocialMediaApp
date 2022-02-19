@@ -206,22 +206,24 @@ export const Post = ({ post }) => {
                     <Grid container pl={2} pt={2} pr={2}>
                       <Grid
                         item
-                        xs={2}
+                        xs={12}
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
                         style={{
-                          maxHeight: "3rem",
-                          maxWidth: "3rem",
+                          width: "100%",
+
                           boxSizing: "border-box",
                           padding: "2px",
                         }}
                       >
                         {comment.user.profileimg && (
                           <Box
-                            maxWidth="100%"
-                            maxHeight="100%"
                             boxShadow={2}
                             style={{
-                              background: "blue",
                               borderRadius: "50%",
+                              height: "3rem",
+                              width: "3rem",
                             }}
                           >
                             <img
@@ -235,37 +237,23 @@ export const Post = ({ post }) => {
                             />
                           </Box>
                         )}
-                      </Grid>
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        justifyContent="center"
-                      >
-                        <Grid
-                          item
-                          xs={10}
-                          style={{
-                            maxHeight: "4rem",
-                            maxWidth: "100%",
-                            boxSizing: "border-box",
-                            padding: "2px",
-                          }}
+
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="center"
+                          ml={1}
                         >
                           <Link to={`/${comment.user.name}`}>
-                            <CardHeader
-                              titleTypographyProps={{
-                                fontSize: "clamp(0.3em, 0.3em + 2vw, 1em)",
-                              }}
-                              subheaderTypographyProps={{
-                                fontSize: "clamp(0.2em, 0.2em + 2vw, 0.8em)",
-                              }}
-                              style={{ margin: "0px", padding: "0px" }}
-                              title={comment.user.name}
-                              subheader={comment.time}
-                            />
+                            <Typography variant="h2">
+                              {comment.user.name}
+                            </Typography>
+                            <Typography variant="body4">
+                              {comment.time}
+                            </Typography>
                           </Link>
-                        </Grid>
-                      </Box>
+                        </Box>
+                      </Grid>
                     </Grid>
                     <Box p={3}>
                       <Typography>{comment.text}</Typography>
