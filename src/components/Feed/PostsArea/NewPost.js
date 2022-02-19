@@ -68,7 +68,7 @@ export const NewPost = ({ newPost, showWindow }) => {
     const newpost = new NewUserPost({
       user: loggedInUser,
       postimg: picture,
-      time: date.toDateString(),
+      time: date.toLocaleString(),
       exacttime: start,
       text: postData.postText,
       comments: [],
