@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import { useAppContext } from "../../ContextProvider/ContextProvider";
 import { useStyles } from "./PostStyles";
+import { useTheme } from "@mui/styles";
 
 // Creates new Post element
 export const Post = ({ post }) => {
@@ -24,6 +25,7 @@ export const Post = ({ post }) => {
   const [postData, setPostData] = useState(post);
   const classes = useStyles();
   const { loggedInUser } = useAppContext();
+  const theme = useTheme();
 
   useEffect(() => {
     if (post) {
@@ -58,64 +60,65 @@ export const Post = ({ post }) => {
         <Grid container p={2}>
           <Grid
             item
-            xs={2}
+            xs={12}
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
             style={{
-              minHeight: "4rem",
-              minWidth: "4rem",
-              maxHeight: "5rem",
-              maxWidth: "5rem",
+              minWidth: "4.5rem",
               boxSizing: "border-box",
               padding: "2px",
             }}
           >
             {postData.user.profileimg && (
               <Box
-                maxWidth="100%"
-                maxHeight="100%"
-                minWidth="1rem%"
-                minHeight="1rem%"
                 boxShadow={2}
                 style={{
-                  background: "blue",
                   borderRadius: "50%",
+                  width: "4rem",
+                  height: "4rem",
                 }}
               >
                 <img
                   src={postData.user.profileimg}
                   style={{
-                    minHeight: "100%",
-                    minWidth: "100%",
-                    maxHeight: "100%",
-                    maxWidth: "100%",
+                    height: "100%",
+                    width: "100%",
                     borderRadius: "50%",
+                    objectFit: "cover",
                   }}
                   alt="profileimage"
                 />
               </Box>
             )}
-          </Grid>
-          <Box display="flex" flexDirection="column" justifyContent="center">
-            <Grid
-              item
-              xs={10}
-              style={{
-                maxWidth: "100%",
-                boxSizing: "border-box",
-                padding: "2px",
-                marginLeft: ".5rem",
-              }}
-            >
-              <Link
-                to={`/${postData.user.name}`}
-                style={{ textDecoration: "none" }}
+            <Box display="flex" flexDirection="column" justifyContent="center">
+              <Box
+                style={{
+                  boxSizing: "border-box",
+                  padding: "2px",
+                  marginLeft: ".8rem",
+                }}
               >
-                <Typography style={{ fontSize: "1.6rem" }}>
-                  {postData.user.name}
+                <Link
+                  to={`/${postData.user.name}`}
+                  style={{
+                    textDecoration: "none",
+                    textDecorationColor: "black",
+                  }}
+                >
+                  <Typography variant="h6" style={{ color: "black" }}>
+                    {postData.user.name}
+                  </Typography>
+                </Link>
+                <Typography
+                  variant="body2"
+                  style={{ color: theme.palette.secondary.main }}
+                >
+                  {postData.time}
                 </Typography>
-              </Link>
-              <Typography variant="body2">{postData.time}</Typography>
-            </Grid>
-          </Box>
+              </Box>
+            </Box>
+          </Grid>
         </Grid>
         {postData.postimg && <hr width="20%" style={{ margin: "auto" }} />}
         <Grid item p={2}>

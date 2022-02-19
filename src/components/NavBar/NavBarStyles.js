@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     maxHeight: "40px",
     maxWidth: "40px",
     borderRadius: "50%",
-    background: "blue",
+    background: "aliceblue",
     overflow: "hidden",
     boxSizing: "border-box",
     "&:hover": {
@@ -41,7 +41,10 @@ export const useStyles = makeStyles((theme) => ({
 
   navlinksbigscreen: {
     marginLeft: "auto",
-    marginRight: "75px",
+    marginRight: "2rem",
+    [theme.breakpoints.up("xl")]: {
+      marginRight: "8rem",
+    },
     width: "230px",
     display: "flex",
     justifyContent: "space-between",
@@ -55,6 +58,9 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      marginRight: "0px",
+    },
   },
 
   linktext: {

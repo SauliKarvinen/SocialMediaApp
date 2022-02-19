@@ -42,6 +42,9 @@ export const ContextProvider = ({ children }) => {
       body2: {
         color: theme.palette.secondary.main,
         fontSize: "1.2rem",
+        [theme.breakpoints.down("sm")]: {
+          fontSize: "1rem",
+        },
       },
     },
     palette: {

@@ -8,7 +8,7 @@ import { ProfilePage } from "./components/ProfilePage/ProfilePage";
 import { MessagesPage } from "./components/Messages/MessagesPage";
 import { ContactsPage } from "./components/ContactsPage/ContactsPage";
 import { Signup } from "./components/Signup/Signup";
-const items = ["Feed", "Contacts", "Messages"];
+const items = ["Feed", "Contacts", "Messages", "Profile", "Log Out"];
 function App() {
   return (
     <ContextProvider>
@@ -40,7 +40,11 @@ function App() {
           <Route
             exact
             path="*"
-            component={() => <div>404 page not found</div>}
+            component={() => (
+              <div style={{ margin: "auto", fontSize: "5rem" }}>
+                404 page not found
+              </div>
+            )}
           />
         </Switch>
       </Router>

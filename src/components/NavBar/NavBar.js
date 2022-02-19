@@ -20,7 +20,8 @@ import { useAppContext } from "../ContextProvider/ContextProvider";
 export const NavBar = ({ menuitems }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const smallscreen = useMediaQuery(theme.breakpoints.down("lg"));
+  const smallscreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { loggedInUser } = useAppContext();
 
   return (
@@ -33,7 +34,7 @@ export const NavBar = ({ menuitems }) => {
             <h2 className={classes.applogo}>Social Media App</h2>
           </Link>
 
-          {smallscreen ? (
+          {/* {smallscreen ? (
             <Box className={classes.navlinkssmallscreen}>
               <Link to={`/profile/${loggedInUser.name}`}>
                 <Tooltip title="Profile">
@@ -56,7 +57,8 @@ export const NavBar = ({ menuitems }) => {
                 </Box>
               </Link>
             </Box>
-          ) : (
+          ) : ( */}
+          {!smallscreen && (
             <Box className={classes.navlinksbigscreen}>
               <Link to={`/profile/${loggedInUser.name}`}>
                 <Box
@@ -92,6 +94,7 @@ export const NavBar = ({ menuitems }) => {
               </Link>
             </Box>
           )}
+          {/* )} */}
         </Toolbar>
       </AppBar>
     </Box>
