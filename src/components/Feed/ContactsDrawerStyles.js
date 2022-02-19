@@ -28,11 +28,13 @@ export const useStyles = makeStyles((theme) => ({
     position: "fixed",
     top: "4.7rem",
     zIndex: 1000,
+    right: "20px",
     [theme.breakpoints.down("sm")]: {
+      right: "10px",
       top: "4rem",
       transform: "scale(0.8)",
     },
-    right: "20px",
+
     "&:hover": {
       transform: "scale(1.05)",
     },

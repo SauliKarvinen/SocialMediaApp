@@ -21,6 +21,7 @@ import { Message } from "../ContextProvider/Message";
 export const MessagesPage = ({ menuitems }) => {
   const theme = useTheme();
   const smallscreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const belowLargeScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const { contacts, loggedInUser } = useAppContext();
   const [filteredContacts, setFilteredContacts] = useState();
   const [filteredMessages, setFilteredMessages] = useState([]);
@@ -205,9 +206,10 @@ export const MessagesPage = ({ menuitems }) => {
                     key={i}
                     style={{
                       background: "aliceblue",
-                      padding: ".3rem",
-                      maxWidth: "48%",
-
+                      padding: ".5rem",
+                      width: belowLargeScreen ? "80%" : "48%",
+                      textAlign: smallscreen ? "justify" : "initial",
+                      border: "1px solid",
                       alignSelf:
                         message.from.name === loggedInUser.name
                           ? "flex-start"

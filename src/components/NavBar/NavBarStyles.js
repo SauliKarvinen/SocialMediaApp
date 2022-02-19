@@ -12,9 +12,12 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       marginLeft: "10px",
     },
-    /* [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("sm")]: {
       fontSize: "1.4rem",
-    }, */
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1.3rem",
+    },
   },
 
   imgcontainer: {

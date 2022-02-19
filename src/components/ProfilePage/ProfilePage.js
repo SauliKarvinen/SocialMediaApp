@@ -32,7 +32,6 @@ export const ProfilePage = ({ menuitems }) => {
     if (usermatch) {
       // scroll to top of the page
       window.scrollTo({ top: gridRef.current.offsetTop - 80 });
-      console.log(gridRef.current.offsetTop);
       setUser(usermatch);
     }
   }, [location.pathname]);

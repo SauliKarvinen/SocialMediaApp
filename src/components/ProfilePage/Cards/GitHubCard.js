@@ -18,7 +18,12 @@ export const GitHubCard = ({ user }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <Typography variant="h5" className={classes.gitHubLink} mt={2}>
+                <Typography
+                  variant="h6"
+                  color="primary"
+                  className={classes.gitHubLink}
+                  mt={2}
+                >
                   Click to view my GitHub page!
                 </Typography>
               </a>

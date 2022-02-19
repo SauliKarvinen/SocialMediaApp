@@ -29,11 +29,11 @@ export const WorkCard = ({ user }) => {
                 }}
               >
                 <Grid container>
-                  <Grid item xs={8}>
+                  <Grid item xs={12} sm={8}>
                     <Typography variant="h5">{item.company}</Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h5">{item.years}</Typography>
+                  <Grid item xs={12} sm={4}>
+                    <Typography variant="h6">{item.years}</Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography

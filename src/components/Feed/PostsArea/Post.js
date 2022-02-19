@@ -8,19 +8,21 @@ import {
   CardHeader,
   Grid,
   IconButton,
+  InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import { useAppContext } from "../../ContextProvider/ContextProvider";
+import { useStyles } from "./PostStyles";
 
 // Creates new Post element
 export const Post = ({ post }) => {
   const [showComments, setShowComments] = useState();
   const [comment, setComment] = useState("");
   const [postData, setPostData] = useState(post);
-
+  const classes = useStyles();
   const { loggedInUser } = useAppContext();
 
   useEffect(() => {
@@ -58,8 +60,10 @@ export const Post = ({ post }) => {
             item
             xs={2}
             style={{
-              maxHeight: "4rem",
-              maxWidth: "4rem",
+              minHeight: "4rem",
+              minWidth: "4rem",
+              maxHeight: "5rem",
+              maxWidth: "5rem",
               boxSizing: "border-box",
               padding: "2px",
             }}
@@ -68,6 +72,8 @@ export const Post = ({ post }) => {
               <Box
                 maxWidth="100%"
                 maxHeight="100%"
+                minWidth="1rem%"
+                minHeight="1rem%"
                 boxShadow={2}
                 style={{
                   background: "blue",
@@ -77,6 +83,8 @@ export const Post = ({ post }) => {
                 <img
                   src={postData.user.profileimg}
                   style={{
+                    minHeight: "100%",
+                    minWidth: "100%",
                     maxHeight: "100%",
                     maxWidth: "100%",
                     borderRadius: "50%",
@@ -91,22 +99,21 @@ export const Post = ({ post }) => {
               item
               xs={10}
               style={{
-                maxHeight: "4rem",
                 maxWidth: "100%",
                 boxSizing: "border-box",
                 padding: "2px",
+                marginLeft: ".5rem",
               }}
             >
-              <Link to={`/${postData.user.name}`}>
-                <CardHeader
-                  titleTypographyProps={{
-                    fontSize: "clamp(0.5em, 0.5em + 2vw, 1em)",
-                  }}
-                  style={{ margin: "0px", padding: "0px" }}
-                  title={postData.user.name}
-                  subheader={postData.time}
-                />
+              <Link
+                to={`/${postData.user.name}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Typography style={{ fontSize: "1.6rem" }}>
+                  {postData.user.name}
+                </Typography>
               </Link>
+              <Typography variant="body2">{postData.time}</Typography>
             </Grid>
           </Box>
         </Grid>
@@ -116,7 +123,6 @@ export const Post = ({ post }) => {
             <div
               style={{
                 maxWidth: "100%",
-                height: "22rem",
                 maxHeight: "22rem",
                 overflow: "hidden",
               }}
@@ -125,7 +131,7 @@ export const Post = ({ post }) => {
                 src={postData.postimg}
                 style={{
                   width: "100%",
-                  maxHeight: "100%",
+                  maxHeight: "22rem",
                   objectFit: "contain",
                 }}
                 alt="postimage"
@@ -136,9 +142,11 @@ export const Post = ({ post }) => {
         <hr width="20%" style={{ margin: "auto" }} />
         <Grid item p={1}>
           <CardContent>
-            <Typography color="secondary" style={{ textAlign: "justify" }}>
-              {postData.text}
-            </Typography>
+            <Box className={classes.postText}>
+              <Typography style={{ textAlign: "justify" }}>
+                {postData.text}
+              </Typography>
+            </Box>
           </CardContent>
         </Grid>
         <Box display="flex" justifyContent="center" mb={3}>
@@ -166,16 +174,16 @@ export const Post = ({ post }) => {
             placeholder={`Leave a comment to ${postData.user.name}!`}
             value={comment}
             onChange={handleCommentChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton edge="end" color="primary" onClick={sendComment}>
+                    <SendIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           ></TextField>
-
-          <IconButton
-            color="primary"
-            style={{ border: "1px solid", borderRadius: "1rem" }}
-            onClick={sendComment}
-          >
-            <Typography pr={1}>Leave comment</Typography>
-            <SendIcon />
-          </IconButton>
         </Box>
 
         {showComments && (

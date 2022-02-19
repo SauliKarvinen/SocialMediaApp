@@ -211,7 +211,7 @@ export const Feed = ({ menuitems }) => {
                       width: "16vw",
                     }}
                   >
-                    <NavigationArea menuitems={menuitems} />
+                    <NavigationArea menuitems={menuitems} feedPage={true} />
                   </Box>
                 </Paper>
               </Grid>

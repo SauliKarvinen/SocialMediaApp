@@ -2,19 +2,27 @@ import React from "react";
 import { Grid, Box, Card, Typography } from "@mui/material";
 import { useTheme } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useStyles } from "./CardStyles";
 
+// About me card in profile page
 export const AboutMeCard = ({ user }) => {
   const theme = useTheme();
+  const classes = useStyles();
   const smallscreen = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Card style={{ padding: "1rem", marginTop: "2rem" }}>
+    <Card style={{ padding: smallscreen ? "0rem" : "1rem", marginTop: "2rem" }}>
       {user && (
         <Grid container p={1}>
           <Grid item xs={12}>
             <Box display="flex" flexDirection="column">
               <Typography variant="h5">About Me</Typography>
               <hr width="125px" />
-              <Grid container mt={2} p={3}>
+              <Grid
+                container
+                mt={2}
+                style={{ padding: smallscreen ? "0rem" : "1rem" }}
+              >
                 <Grid item xs={12} md={3}>
                   <Box display="flex" justifyContent="center">
                     <Box
@@ -60,7 +68,7 @@ export const AboutMeCard = ({ user }) => {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item xs={12} mt={3} p={3}>
+                <Grid item xs={12} mt={3} p={3} className={classes.bioText}>
                   <Typography>{user.bio}</Typography>
                 </Grid>
               </Grid>

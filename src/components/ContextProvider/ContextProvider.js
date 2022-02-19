@@ -25,6 +25,23 @@ export const ContextProvider = ({ children }) => {
 
       h5: {
         color: "#2f3332",
+        fontSize: "2rem",
+        [theme.breakpoints.down("md")]: {
+          fontSize: "1.6rem",
+        },
+      },
+
+      h6: {
+        color: "#2f3332",
+        fontSize: "1.7rem",
+        [theme.breakpoints.down("md")]: {
+          fontSize: "1.3rem",
+        },
+      },
+
+      body2: {
+        color: theme.palette.secondary.main,
+        fontSize: "1.2rem",
       },
     },
     palette: {
