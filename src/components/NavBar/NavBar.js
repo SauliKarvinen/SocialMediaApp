@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import { DrawerMenu } from "./DrawerMenu";
 import {
   AppBar,
@@ -17,6 +16,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAppContext } from "../ContextProvider/ContextProvider";
 
+// NavBar
 export const NavBar = ({ menuitems }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -41,6 +41,7 @@ export const NavBar = ({ menuitems }) => {
                     <img
                       src={profileimage}
                       className={classes.profileimage}
+                      alt="profileimage"
                     ></img>
                   </Box>
                 </Tooltip>
@@ -67,6 +68,7 @@ export const NavBar = ({ menuitems }) => {
                     <img
                       src={profileimage}
                       className={classes.profileimage}
+                      alt="profileimage"
                     ></img>
                   </Box>
                   {

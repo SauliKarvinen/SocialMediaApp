@@ -1,18 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {
-  Alert,
-  Box,
-  Button,
-  FormControl,
-  OutlinedInput,
-  InputLabel,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
 import { useStyles } from "./LoginStyles";
 
 // LogIn view
@@ -22,8 +11,6 @@ export const LogIn = () => {
   const userdata = { email: "keijo@email.com", password: "password" };
   const [inputData, setInputData] = useState(() => userdata);
   const [inputsFilled, setInputsFilled] = useState(false);
-  const theme = useTheme();
-  const smallscreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const email = inputData.email;
@@ -36,6 +23,7 @@ export const LogIn = () => {
     setInputData(() => ({ ...inputData, [e.target.name]: e.target.value }));
   };
 
+  // after login, go to Feed page
   const handleLogin = () => {
     history.push("/feed");
   };

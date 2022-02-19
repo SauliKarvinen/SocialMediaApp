@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   Card,
-  CardHeader,
   CardContent,
   CardMedia,
   Tooltip,
@@ -10,11 +9,9 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useStyles } from "./ContactsPageStyles";
-import { useTheme } from "@mui/styles";
 
 export const ContactCard = ({ contact }) => {
   const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <Link
@@ -44,7 +41,11 @@ export const ContactCard = ({ contact }) => {
               p={2}
             >
               <Box className={classes.imgborder} boxShadow={2}>
-                <img src={contact.profileimg} className={classes.img} />
+                <img
+                  src={contact.profileimg}
+                  className={classes.img}
+                  alt="profileimage"
+                />
               </Box>
 
               <Box

@@ -7,7 +7,6 @@ import {
   InputAdornment,
   Paper,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useStyles } from "./MessagesPageStyles";
@@ -17,8 +16,8 @@ import { useTheme } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SendIcon from "@mui/icons-material/Send";
 import { Message } from "../ContextProvider/Message";
-import { DrawerMenu } from "../NavBar/DrawerMenu";
 
+// Messages page
 export const MessagesPage = ({ menuitems }) => {
   const theme = useTheme();
   const smallscreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -30,6 +29,7 @@ export const MessagesPage = ({ menuitems }) => {
   const [inputvalue, setInputvalue] = useState("");
   const classes = useStyles();
 
+  // Filter logged in user from contacts
   useEffect(() => {
     if (contacts) {
       const filtered = contacts.filter(
@@ -74,7 +74,6 @@ export const MessagesPage = ({ menuitems }) => {
     if (inputvalue !== "") {
       const start = Date.now();
       const now = new Date(start);
-      const text = inputvalue;
 
       const sender = new Message({
         to: selectedUser,
@@ -99,8 +98,6 @@ export const MessagesPage = ({ menuitems }) => {
       setFilteredMessages([...filteredMessages, sender]);
     }
   };
-
-  console.log("menuitems: ", menuitems);
 
   return (
     <Box className={classes.container}>
@@ -159,7 +156,11 @@ export const MessagesPage = ({ menuitems }) => {
                     p={1}
                   >
                     <Box className={classes.imgborder} boxShadow={2}>
-                      <img src={contact.profileimg} className={classes.img} />
+                      <img
+                        src={contact.profileimg}
+                        className={classes.img}
+                        alt="profileimage"
+                      />
                     </Box>
 
                     <Typography
@@ -222,7 +223,7 @@ export const MessagesPage = ({ menuitems }) => {
                           borderRadius: "50%",
                           border: "1px solid",
                         }}
-                        alt="from"
+                        alt="profileimage"
                       />
                     )}
                     <Typography variant="body1">{message.text}</Typography>

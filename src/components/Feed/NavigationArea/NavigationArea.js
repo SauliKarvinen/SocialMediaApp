@@ -4,6 +4,7 @@ import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOu
 import { Link } from "react-router-dom";
 import { useStyles } from "./NavigationAreaStyles";
 
+// Navigation area for Feed page
 export const NavigationArea = ({ menuitems }) => {
   const classes = useStyles();
   return (

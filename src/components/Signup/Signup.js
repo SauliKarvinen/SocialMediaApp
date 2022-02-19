@@ -1,9 +1,7 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { Link, useHistory } from "react-router-dom";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 import { useStyles } from "./SignupStyles";
 
 // SignUp view
@@ -12,18 +10,11 @@ export const Signup = () => {
   const userdata = { email: "", password: "" };
   const [inputData, setInputData] = useState(() => userdata);
   const [inputsFilled, setInputsFilled] = useState(true);
-  const theme = useTheme();
 
-  /* useEffect(() => {
-    const email = inputData.email;
-    const password = inputData.password;
-
-    if (email !== "" && password !== "") setInputsFilled(true);
-    else setInputsFilled(false);
-  }, [inputData]); */
-  const handleInputChange = (e) => {
+  // For future use
+  /* const handleInputChange = (e) => {
     setInputData(() => ({ ...inputData, [e.target.name]: e.target.value }));
-  };
+  }; */
 
   const handleSignup = () => {
     alert("Sign Up system under construction....");

@@ -1,14 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Drawer,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import { NavBar } from "../NavBar/NavBar";
 import { NavigationArea } from "./NavigationArea/NavigationArea";
 import { useStyles } from "./FeedStyles";
@@ -16,15 +8,14 @@ import { useTheme } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ContactsArea } from "./ContactsArea/ContactsArea";
 import { PostsArea } from "./PostsArea/PostsArea";
-import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import CommentIcon from "@mui/icons-material/Comment";
 import { ContactsDrawer } from "./ContactsDrawer";
 import { useAppContext } from "../ContextProvider/ContextProvider";
 import { NewPost } from "./PostsArea/NewPost";
 import PeopleIcon from "@mui/icons-material/People";
 
+// Feed page
 export const Feed = ({ menuitems }) => {
-  const [showContacts, setShowContacts] = useState(false);
   const [newPost, setNewPost] = useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -32,13 +23,17 @@ export const Feed = ({ menuitems }) => {
   const xlscreen = useMediaQuery(theme.breakpoints.up("xl"));
   const { contacts } = useAppContext();
 
+  // On page load, scroll to top of the page
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  // New post - true, all components behind NewPost component will hace reduced opacity
   const createNewPost = () => {
     setNewPost(true);
   };
 
+  // Called from NewPost component after New Post is created
   const handleShowNewPostWindow = (e) => {
     setNewPost(e);
   };
@@ -146,6 +141,7 @@ export const Feed = ({ menuitems }) => {
                   display="flex"
                   flexDirection="column"
                   className={classes.feedheadercontainer}
+                  style={{ zIndex: 500 }}
                 >
                   <Box display="flex" alignItems="center">
                     <Typography variant="h5" mb={1} pt={2}>
@@ -222,15 +218,19 @@ export const Feed = ({ menuitems }) => {
               <Grid item xs={6}>
                 <div
                   style={{
-                    width: "47vw",
+                    width: xlscreen ? "47vw" : "50vw",
                     height: "1.8rem",
                     background: "white",
                     position: "fixed",
                     top: "8rem",
                     opacity: 0.95,
+                    zIndex: 400,
                   }}
                 ></div>
-                <Box className={classes.postsarea}>
+                <Box
+                  className={classes.postsarea}
+                  style={{ paddingLeft: "4px" }}
+                >
                   <PostsArea />
                 </Box>
               </Grid>

@@ -8,27 +8,20 @@ import {
   CardHeader,
   Grid,
   IconButton,
-  Paper,
-  TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useStyles } from "./PostStyles";
 import SendIcon from "@mui/icons-material/Send";
-import { useTheme } from "@mui/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAppContext } from "../../ContextProvider/ContextProvider";
-import { Post as UserPost } from "../../ContextProvider/Post";
 
+// Creates new Post element
 export const Post = ({ post }) => {
   const [showComments, setShowComments] = useState();
   const [comment, setComment] = useState("");
   const [postData, setPostData] = useState(post);
-  const theme = useTheme();
-  const largeScreen = useMediaQuery(theme.breakpoints.up("lg"));
 
-  const { contacts, loggedInUser } = useAppContext();
+  const { loggedInUser } = useAppContext();
 
   useEffect(() => {
     if (post) {
@@ -88,6 +81,7 @@ export const Post = ({ post }) => {
                     maxWidth: "100%",
                     borderRadius: "50%",
                   }}
+                  alt="profileimage"
                 />
               </Box>
             )}
@@ -134,6 +128,7 @@ export const Post = ({ post }) => {
                   maxHeight: "100%",
                   objectFit: "contain",
                 }}
+                alt="postimage"
               />
             </div>
           )}
@@ -225,6 +220,7 @@ export const Post = ({ post }) => {
                                 maxWidth: "100%",
                                 borderRadius: "50%",
                               }}
+                              alt="profileimage"
                             />
                           </Box>
                         )}

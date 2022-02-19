@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box } from "@mui/system";
 import { Post } from "./Post";
 import { useAppContext } from "../../ContextProvider/ContextProvider";

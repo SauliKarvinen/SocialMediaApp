@@ -1,10 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Box, Drawer, IconButton, Tooltip, Typography } from "@mui/material";
-import { Menu } from "@mui/icons-material/";
 import { useStyles } from "./ContactsDrawerStyles";
 import { ContactsArea } from "../Feed/ContactsArea/ContactsArea";
-import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import { useTheme } from "@mui/styles";
 import PeopleIcon from "@mui/icons-material/People";
 

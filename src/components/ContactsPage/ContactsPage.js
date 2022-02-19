@@ -6,11 +6,13 @@ import { NavBar } from "../NavBar/NavBar";
 import { useAppContext } from "../ContextProvider/ContextProvider";
 import { ContactCard } from "./ContactCard";
 
+// Contacts Page
 export const ContactsPage = ({ menuitems }) => {
   const classes = useStyles();
   const [filteredContacts, setFilteredContacts] = useState();
   const { contacts, loggedInUser } = useAppContext();
 
+  // Filter logged in user from contacts
   useEffect(() => {
     if (contacts) {
       const filtered = contacts.filter(
@@ -18,9 +20,8 @@ export const ContactsPage = ({ menuitems }) => {
       );
       setFilteredContacts(filtered);
     }
-  }, []);
+  }, [contacts, loggedInUser.name]);
 
-  console.log("filtered", filteredContacts);
   return (
     <Box className={classes.container}>
       <NavBar menuitems={menuitems} />

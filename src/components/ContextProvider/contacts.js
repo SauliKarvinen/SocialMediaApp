@@ -41,6 +41,7 @@ const keijo = new User(
 const start = Date.now();
 const d = new Date(start);
 
+// Add some posts for users
 matti.addPost(
   new Post({
     user: matti,
@@ -124,8 +125,10 @@ keijo.addPost(
   })
 );
 
+// Array of users
 const contacts = [keijo, matti, maija];
 
+// Set lorem ipsum bios, social media contacts and github links for users
 for (const c in contacts) {
   contacts[c].setBio(
     "Reprehenderit nostrud sunt amet id excepteur amet labore minim laboris excepteur excepteur adipisicing irure ullamco. Sint ex dolor laboris labore nostrud sint amet commodo. Exercitation aliqua aliqua amet non incididunt laboris commodo ex laborum proident aliquip nulla. Fugiat sit qui qui elit ex commodo dolore nisi irure fugiat ipsum. Anim et excepteur laborum anim ipsum ex duis id. Cillum officia et officia dolore magna ipsum do.Mollit deserunt sint exercitation in ea consequat dolor. Minim sint culpa dolore aute ipsum laborum deserunt laborum occaecat. In ipsum id esse aliquip. Non adipisicing nulla do adipisicing.Dolor consequat in duis et non ea culpa velit exercitation. Laborum labore exercitation nisi cupidatat culpa incididunt ullamco ipsum culpa amet aute. Et consequat non eu nostrud mollit et irure. Aute voluptate incididunt enim cillum consectetur reprehenderit enim. Sit ut culpa qui irure ipsum sint dolore proident fugiat aliqua. Non id aliquip veniam dolore qui. Consectetur mollit mollit in Lorem."
@@ -134,6 +137,7 @@ for (const c in contacts) {
   contacts[c].setGitHub(contacts[c].name);
 }
 
+// Set work histories for users
 keijo.setWorkHistory([
   { years: "2015-2018", title: "Trainee", company: "McDonalds" },
   { years: "2018-2021", title: "Trainee", company: "R-Kioski" },
@@ -150,6 +154,7 @@ maija.setWorkHistory([
   { years: "2012-", title: "CEO", company: "Facebook" },
 ]);
 
+// Set some default messages for users
 for (let i = 0; i < 3; i++) {
   setTimeout(() => {
     const start = Date.now();

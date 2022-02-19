@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import { createTheme, useTheme, ThemeProvider } from "@mui/material/styles";
 import { useContacts } from "./contacts";
-import { User } from "./User";
-import keijoimg from "../../img/keijoprofile.png";
 
 const ThemeContext = React.createContext();
 
@@ -11,6 +9,7 @@ export const useAppContext = () => {
   return useContext(ThemeContext);
 };
 
+// App context provider
 export const ContextProvider = ({ children }) => {
   // @mui themes
   const theme = useTheme();
@@ -43,6 +42,7 @@ export const ContextProvider = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState(user);
   const [posts, setPosts] = useState();
 
+  // Separate posts from users
   const fetchPosts = () => {
     let postsarr = [];
     for (const { posts } of contacts) {

@@ -14,27 +14,33 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useStyles } from "./NewPostStyles";
 import { Post as NewUserPost } from "../../ContextProvider/Post";
 import { useAppContext } from "../../ContextProvider/ContextProvider";
+
+// New Post popup window
 export const NewPost = ({ newPost, showWindow }) => {
   const classes = useStyles();
   const { loggedInUser, updatePosts } = useAppContext();
   const [picture, setPicture] = useState(null);
   const [pictureLoaded, setPictureLoaded] = useState(false);
   const fileInputRef = useRef();
-  const addPicture = () => {
+
+  // for future use
+  /* const addPicture = () => {
     setPicture(true);
-  };
+  }; */
   const [postData, setPostData] = useState({
     picture: null,
     postText: "",
   });
 
-  const [toggle, setToggle] = useState(false);
+  // For future use
+  /* const [toggle, setToggle] = useState(false); */
 
+  // file input ref
   const refFileInput = () => {
     fileInputRef.current.click();
-    console.log("ref:", fileInputRef.current);
   };
 
+  // Picture upload handler
   const handlePictureUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -47,12 +53,14 @@ export const NewPost = ({ newPost, showWindow }) => {
     }
   };
 
+  // Remove picture
   const removePicture = () => {
     setPicture(false);
     fileInputRef.current.value = null;
     setPictureLoaded(false);
   };
 
+  // upload post
   const uploadPost = () => {
     const start = Date.now();
     const date = new Date(start);
@@ -69,22 +77,6 @@ export const NewPost = ({ newPost, showWindow }) => {
     loggedInUser.addPost(newpost);
     updatePosts();
     showWindow(false);
-
-    /* 
-    
-    matti.addPost({
-  user: matti,
-  postimg: mattipost,
-  time: d.toDateString(),
-  text: "Pariatur eiusmod excepteur in deserunt sunt ipsum Lorem est labore esse incididunt officia sunt qui. Minim anim est veniam pariatur do aliqua deserunt occaecat cupidatat. Tempor est adipisicing consectetur excepteur in deserunt reprehenderit. Pariatur velit velit ut aliquip elit tempor anim non nostrud laborum voluptate excepteur. Consequat duis in elit fugiat. Adipisicing incididunt exercitation fugiat anim consequat. Id cupidatat nulla et enim deserunt nulla esse nulla reprehenderit et fugiat.Irure ipsum mollit tempor sint velit. Deserunt consectetur proident officia amet quis pariatur est. Commodo anim cillum dolor pariatur dolor exercitation culpa aliquip deserunt est exercitation.",
-  comments: [
-    {
-      user: keijo,
-      time: d.toDateString(),
-      text: "Semmosella asialla lähin kommentoimaan että Aute sit consequat mollit sit culpa elit cillum duis eu ea sint. Nostrud non Lorem laboris esse cillum excepteur. Labore amet laboris amet dolore nisi ut esse ea sit enim eu quis pariatur. Magna voluptate commodo deserunt ullamco aute anim et tempor. Amet voluptate commodo irure ad deserunt sit amet ex aliqua dolor ea anim eiusmod veniam.",
-    },
-  ],
-});*/
   };
 
   const handlePostText = (e) => {

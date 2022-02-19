@@ -8,6 +8,7 @@ import { useStyles } from "./CardStyles";
 import { useTheme } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
+// Contact card in profile page
 export const ContactCard = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -24,7 +25,10 @@ export const ContactCard = ({ user }) => {
           </Grid>
           <Grid container mt={4}>
             <Grid item xs={3} className={classes.contactGridCell}>
-              <a href={`mailto:${user.name.split(" ")[0]}@user.com`}>
+              <a
+                href={`mailto:${user.name.split(" ")[0]}@user.com`}
+                rel="noreferrer"
+              >
                 <IconButton
                   style={{
                     color: theme.palette.primary.main,
@@ -36,7 +40,11 @@ export const ContactCard = ({ user }) => {
               </a>
             </Grid>
             <Grid item xs={3} className={classes.contactGridCell}>
-              <a href={`http://linkedin.com/${user.name}`} target="_blank">
+              <a
+                href={`http://linkedin.com/${user.name}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <IconButton
                   style={{
                     color: theme.palette.primary.main,
@@ -48,7 +56,11 @@ export const ContactCard = ({ user }) => {
               </a>
             </Grid>
             <Grid item xs={3} className={classes.contactGridCell}>
-              <a href={`http://instagram.com/${user.name}`} target="_blank">
+              <a
+                href={`http://instagram.com/${user.name}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <IconButton
                   style={{
                     color: theme.palette.primary.main,
@@ -60,7 +72,11 @@ export const ContactCard = ({ user }) => {
               </a>
             </Grid>
             <Grid item xs={3} className={classes.contactGridCell}>
-              <a href={`http://facebook.com/${user.name}`} target="_blank">
+              <a
+                href={`http://facebook.com/${user.name}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <IconButton
                   style={{
                     color: theme.palette.primary.main,

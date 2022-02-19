@@ -2,16 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 
+// Tabs area in Profile page
 export const TabsArea = ({ scrollToComponent }) => {
   const [tabValue, setTabValue] = useState(false);
+
+  // Changes active tab
   const handleChange = (e, value) => {
     setTabValue(value);
     scrollToComponent(value);
   };
 
-  /* const handleScroll = (e) => {
-    console.log("Target:", e.target);
-  }; */
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

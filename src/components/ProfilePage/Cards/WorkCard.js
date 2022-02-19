@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, Box, Card, Typography } from "@mui/material";
 import { useTheme } from "@mui/styles";
 
+// Work card in profile page
 export const WorkCard = ({ user }) => {
   const theme = useTheme();
   return (

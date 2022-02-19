@@ -12,7 +12,7 @@ export const ContactsArea = ({ contacts }) => {
   useEffect(() => {
     const arr = contacts.filter((user) => user.name !== loggedInUser.name);
     setContactsData(arr);
-  }, [contacts]);
+  }, [contacts, loggedInUser.name]);
   const classes = useStyles();
   return (
     <>

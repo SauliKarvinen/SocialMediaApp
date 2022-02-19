@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Paper, Tooltip, Typography } from "@mui/material";
 import { useStyles } from "./ContactStyles";
 import { Link } from "react-router-dom";
+
+// Contact card for Feed contact area
 export const Contact = ({ contact }) => {
   const classes = useStyles();
 
@@ -17,7 +19,11 @@ export const Contact = ({ contact }) => {
           p={1}
         >
           <Box className={classes.imgborder} boxShadow={2}>
-            <img src={contact.profileimg} className={classes.img} />
+            <img
+              src={contact.profileimg}
+              className={classes.img}
+              alt="profileimage"
+            />
           </Box>
           <Link
             to={`/profile/${contact.name}`}

@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, Box, Card, Typography } from "@mui/material";
 import { Post } from "../../Feed/PostsArea/Post";
 
+// Posts card in profile page
 export const PostsCard = ({ user }) => {
   return (
     <Card style={{ padding: "1rem", marginTop: "2rem" }}>

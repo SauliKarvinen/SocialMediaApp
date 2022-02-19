@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, Box, Card, Typography } from "@mui/material";
 import { useStyles } from "./CardStyles";
 
+// GitHub card in profile page
 export const GitHubCard = ({ user }) => {
   const classes = useStyles();
   return (
@@ -12,7 +13,11 @@ export const GitHubCard = ({ user }) => {
             <Box display="flex" flexDirection="column">
               <Typography variant="h5">GitHub</Typography>
               <hr width="125px" />
-              <a href={`http://www.github.com/${user.name}`} target="_blank">
+              <a
+                href={`http://www.github.com/${user.name}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Typography variant="h5" className={classes.gitHubLink} mt={2}>
                   Click to view my GitHub page!
                 </Typography>

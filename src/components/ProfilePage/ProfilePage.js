@@ -12,6 +12,7 @@ import { ContactCard } from "./Cards/ContactCard";
 import { GitHubCard } from "./Cards/GitHubCard";
 import { PostsCard } from "./Cards/PostsCard";
 
+// Profile page
 export const ProfilePage = ({ menuitems }) => {
   const classes = useStyles();
   const location = useLocation();
@@ -22,16 +23,22 @@ export const ProfilePage = ({ menuitems }) => {
   const contactRef = useRef(null);
   const githubRef = useRef(null);
   const postsRef = useRef(null);
+  const gridRef = useRef(null);
 
   // Finds the user matching url
   useEffect(() => {
     const urlname = location.pathname.split("/")[2];
     const usermatch = contacts.find((user) => user.name === urlname);
-    if (usermatch) setUser(usermatch);
-  }, [location.pathname, contacts]);
-  //^^Kokeile tuo contacts ottaa pois kun siitä tuli joku ilmoitus että pitäis olla
+    if (usermatch) {
+      // scroll to top of the page
+      window.scrollTo({ top: gridRef.current.offsetTop - 80 });
+      console.log(gridRef.current.offsetTop);
+      setUser(usermatch);
+    }
+  }, [location.pathname]);
+
+  // Scroll to component matching the tab value
   const scrollToComponent = (e) => {
-    console.log("value:", e);
     switch (e) {
       case "1":
         window.scrollTo({
@@ -74,6 +81,7 @@ export const ProfilePage = ({ menuitems }) => {
         <NavBar menuitems={menuitems} />
         <Grid container className={classes.gridContainer}>
           <Grid
+            ref={gridRef}
             item
             className={classes.gridBackgroundImage}
             xs={12}
