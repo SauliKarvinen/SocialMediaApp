@@ -105,7 +105,6 @@ export const Feed = ({ menuitems }) => {
                           variant="outlined"
                           onClick={createNewPost}
                           style={{
-                            /* maxWidth: xsscreen ? "80%" : "100%", */
                             transform: xsscreen ? "scale(0.8)" : "scale(1.0)",
                           }}
                         >

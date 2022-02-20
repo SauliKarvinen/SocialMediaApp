@@ -26,38 +26,16 @@ export const NavBar = ({ menuitems }) => {
 
   return (
     <Box className={classes.navbar}>
-      <AppBar style={{ background: "#fafafa" }} elevation={2}>
+      <AppBar
+        style={{ background: theme.palette.background.paper }}
+        elevation={2}
+      >
         <Toolbar>
           <DrawerMenu menuitems={menuitems} />
 
           <Link to="/feed">
             <h2 className={classes.applogo}>Social Media App</h2>
           </Link>
-
-          {/* {smallscreen ? (
-            <Box className={classes.navlinkssmallscreen}>
-              <Link to={`/profile/${loggedInUser.name}`}>
-                <Tooltip title="Profile">
-                  <Box className={classes.imgcontainer} boxShadow={3} mr={1}>
-                    <img
-                      src={profileimage}
-                      className={classes.profileimage}
-                      alt="profileimage"
-                    ></img>
-                  </Box>
-                </Tooltip>
-              </Link>
-              <Link to="/login">
-                <Box mr={1}>
-                  <Tooltip title="Log Out">
-                    <IconButton color="primary">
-                      <LogoutIcon className={classes.logouticon}></LogoutIcon>
-                    </IconButton>
-                  </Tooltip>
-                </Box>
-              </Link>
-            </Box>
-          ) : ( */}
           {!smallscreen && (
             <Box className={classes.navlinksbigscreen}>
               <Link to={`/profile/${loggedInUser.name}`}>
@@ -74,7 +52,7 @@ export const NavBar = ({ menuitems }) => {
                     ></img>
                   </Box>
                   {
-                    <Typography className={classes.linktext} color="primary">
+                    <Typography className={classes.linktext} color="secondary">
                       Profile
                     </Typography>
                   }
@@ -87,14 +65,13 @@ export const NavBar = ({ menuitems }) => {
                       <LogoutIcon className={classes.logouticon}></LogoutIcon>
                     </IconButton>
                   </Box>
-                  <Typography className={classes.linktext} color="primary">
+                  <Typography className={classes.linktext} color="secondary">
                     Log Out
                   </Typography>
                 </Box>
               </Link>
             </Box>
           )}
-          {/* )} */}
         </Toolbar>
       </AppBar>
     </Box>

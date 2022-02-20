@@ -65,6 +65,9 @@ export const ContextProvider = ({ children }) => {
     palette: {
       primary: { main: "#256fe6" },
       secondary: { main: "#5b5c5b" },
+      background: {
+        paper: "#fbfbfb",
+      },
     },
   });
 

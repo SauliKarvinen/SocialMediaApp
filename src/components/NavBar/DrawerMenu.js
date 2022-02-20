@@ -27,7 +27,12 @@ export const DrawerMenu = ({ menuitems }) => {
         anchor="left"
         open={openMenu}
         onClose={() => setOpenMenu(false)}
-        PaperProps={{ style: { marginTop: smallscreen ? "3rem" : "4rem" } }}
+        PaperProps={{
+          style: {
+            marginTop: smallscreen ? "3.5rem" : "4rem",
+            background: theme.palette.background.paper,
+          },
+        }}
       >
         <NavigationArea menuitems={menuitems} />
       </Drawer>
