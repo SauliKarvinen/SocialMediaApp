@@ -224,8 +224,10 @@ export const MessagesPage = ({ menuitems }) => {
                     background: theme.palette.background.paper,
                     border: "1px solid gray",
                     width: "100%",
-                    position: "sticky",
-                    top: "0px",
+                    position: "fixed",
+                    top: "56px",
+                    left: "0px",
+                    right: "0px",
                     display: "flex",
                     alignItems: "center",
                   }}
