@@ -18,6 +18,8 @@ export const ProfilePage = ({ menuitems }) => {
   const location = useLocation();
   const { contacts } = useAppContext();
   const [user, setUser] = useState();
+  const [showTabs, setShowTabs] = useState(true);
+  const [scroll, setScroll] = useState();
   const aboutMeRef = useRef(null);
   const workRef = useRef(null);
   const contactRef = useRef(null);
@@ -35,6 +37,26 @@ export const ProfilePage = ({ menuitems }) => {
       setUser(usermatch);
     }
   }, [location.pathname]);
+
+  // scroll listener
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scroll]);
+
+  // Hide name and tabs on scroll down
+  const handleScroll = () => {
+    if (
+      window.scrollY > scroll &&
+      window.scrollY > aboutMeRef.current.offsetTop
+    )
+      setShowTabs(false);
+    else {
+      if (window.scrollY < scroll) setShowTabs(true);
+    }
+    setScroll(window.scrollY);
+  };
 
   // Scroll to component matching the tab value
   const scrollToComponent = (e) => {
@@ -94,7 +116,13 @@ export const ProfilePage = ({ menuitems }) => {
               />
             )}
           </Grid>
-          <Grid item className={classes.gridNameHeader} xs={12}>
+          <Grid
+            item
+            className={
+              showTabs ? classes.showGridNameHeader : classes.hideGridNameHeader
+            }
+            xs={12}
+          >
             <Box display="flex" flexDirection="column">
               <Typography variant="h3" mb={1}>
                 {user && user.name}

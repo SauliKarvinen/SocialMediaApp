@@ -25,7 +25,7 @@ export const MessagesPage = ({ menuitems }) => {
   const { contacts, loggedInUser } = useAppContext();
   const [filteredContacts, setFilteredContacts] = useState();
   const [filteredMessages, setFilteredMessages] = useState([]);
-  const [selectedUser, setSelectedUser] = useState({ name: "" });
+  const [selectedUser, setSelectedUser] = useState();
   const messagearea = useRef(null);
   const [inputvalue, setInputvalue] = useState("");
   const classes = useStyles();
@@ -36,7 +36,12 @@ export const MessagesPage = ({ menuitems }) => {
       const filtered = contacts.filter(
         (user) => user.name !== loggedInUser.name
       );
-      setFilteredContacts(filtered);
+
+      if (filtered.length > 0) {
+        setFilteredContacts(filtered);
+        fetchMessages(filtered[0]);
+        setSelectedUser(filtered[0]);
+      }
     }
   }, []);
 
@@ -103,14 +108,7 @@ export const MessagesPage = ({ menuitems }) => {
   return (
     <Box className={classes.container}>
       <NavBar menuitems={menuitems} />
-      <Box
-        style={{
-          position: "absolute",
-          zIndex: 11000,
-          left: ".3rem",
-          top: ".6rem",
-        }}
-      ></Box>
+
       <Grid container className={classes.gridContainer}>
         <Grid item xs={12}>
           <Box display="flex" flexDirection="column">
@@ -129,7 +127,14 @@ export const MessagesPage = ({ menuitems }) => {
           </Grid>
         )}
         <Grid item xs={12} sm={4} mt={3}>
-          <Paper style={{ width: "90%", height: "60vh", padding: "1rem" }}>
+          <Paper
+            style={{
+              width: "90%",
+              height: smallscreen ? "30vh" : "60vh",
+              overflow: smallscreen ? "scroll" : "initial",
+              padding: "1rem",
+            }}
+          >
             <Typography variant="body2" color="secondary" mb={1}>
               Click user card to show chat
             </Typography>
@@ -188,6 +193,8 @@ export const MessagesPage = ({ menuitems }) => {
               width: "90%",
               height: "60vh",
               overflow: "scroll",
+              height: smallscreen ? "90vh" : "60vh",
+              marginBottom: "1rem",
             }}
           >
             {/* Render messages */}
@@ -212,8 +219,8 @@ export const MessagesPage = ({ menuitems }) => {
                       border: "1px solid",
                       alignSelf:
                         message.from.name === loggedInUser.name
-                          ? "flex-start"
-                          : "flex-end",
+                          ? "flex-end"
+                          : "flex-start",
                     }}
                   >
                     {message.to.name === loggedInUser.name && (
@@ -243,8 +250,9 @@ export const MessagesPage = ({ menuitems }) => {
                 background: "white",
                 position: "sticky",
                 bottom: "0px",
-                paddingTop: "1rem",
+                padding: "1rem .5rem .5rem .5rem",
               }}
+              placeholder="Type here"
               className={classes.input}
               value={inputvalue}
               onChange={handleInputChange}

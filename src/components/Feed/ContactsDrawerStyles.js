@@ -29,7 +29,7 @@ export const useStyles = makeStyles((theme) => ({
     top: "4.7rem",
     zIndex: 1000,
     right: "20px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       right: "10px",
       top: "4rem",
       transform: "scale(0.8)",

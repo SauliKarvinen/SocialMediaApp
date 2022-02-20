@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Box,
   Typography,
@@ -23,6 +23,9 @@ export const NewPost = ({ newPost, showWindow }) => {
   const [pictureLoaded, setPictureLoaded] = useState(false);
   const fileInputRef = useRef();
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
   // for future use
   /* const addPicture = () => {
     setPicture(true);
@@ -79,6 +82,7 @@ export const NewPost = ({ newPost, showWindow }) => {
     showWindow(false);
   };
 
+  // input handler
   const handlePostText = (e) => {
     // Handle possible hashtags
     /* const reg = /#[a-zA-ZäÄöÖ]+/g;
@@ -87,8 +91,28 @@ export const NewPost = ({ newPost, showWindow }) => {
     setPostData({ ...postData, postText: e.target.value });
   };
 
+  // cancel creating new post
+  const cancel = () => {
+    setPicture(null);
+    setPictureLoaded(null);
+    showWindow(false);
+  };
+
   return (
     <Paper className={classes.container} elevation={2}>
+      <Tooltip title="Go back">
+        <IconButton
+          style={{
+            position: "absolute",
+            top: ".3rem",
+            right: ".3rem",
+          }}
+          color="primary"
+          onClick={cancel}
+        >
+          <HighlightOffIcon style={{ borderRadius: "50%" }} />
+        </IconButton>
+      </Tooltip>
       <Box display="flex" flexDirection="column">
         <Typography
           variant="h5"
@@ -111,6 +135,7 @@ export const NewPost = ({ newPost, showWindow }) => {
                     width: "1rem",
                     height: "1rem",
                     alignSelf: "center",
+                    marginBottom: ".5rem",
                     opacity: pictureLoaded ? 1 : 0,
                   }}
                   color="primary"
@@ -137,9 +162,14 @@ export const NewPost = ({ newPost, showWindow }) => {
               style={{ display: "none" }}
               onChange={handlePictureUpload}
             />
-            <Grid container spacing={1} justifyContent="center">
+            <Grid container spacing={1} justifyContent="space-between">
               <Grid item>
-                <Button size="small" variant="outlined" onClick={refFileInput}>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={refFileInput}
+                  style={{ background: "aliceblue", width: "7.5rem" }}
+                >
                   Add picture
                 </Button>
               </Grid>
@@ -149,8 +179,9 @@ export const NewPost = ({ newPost, showWindow }) => {
                   size="small"
                   variant="outlined"
                   onClick={uploadPost}
+                  style={{ background: "aliceblue", width: "7.5rem" }}
                 >
-                  Upload post
+                  Post it!
                 </Button>
               </Grid>
             </Grid>

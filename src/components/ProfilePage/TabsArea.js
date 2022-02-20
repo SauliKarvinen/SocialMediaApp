@@ -14,8 +14,18 @@ export const TabsArea = ({ scrollToComponent }) => {
 
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={tabValue} onChange={handleChange}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
+      >
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons={false}
+        >
           <Tab label="About Me" value="1" />
           <Tab label="Work" value="2" />
           <Tab label="Contact" value="3" />

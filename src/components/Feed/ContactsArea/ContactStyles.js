@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     boxSizing: "border-box",
 
-    color: "white",
+    color: theme.palette.background.paper,
     cursor: "pointer",
     maxWidth: "15rem",
     "&:hover": {

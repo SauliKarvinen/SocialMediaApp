@@ -1,15 +1,25 @@
 import React from "react";
 import { Grid, Box, Card, Typography } from "@mui/material";
 import { Post } from "../../Feed/PostsArea/Post";
+import { useTheme } from "@mui/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Posts card in profile page
 export const PostsCard = ({ user }) => {
+  const theme = useTheme();
+  const smallscreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <Card style={{ padding: "1rem", marginTop: "2rem" }}>
+    <Card
+      style={{ padding: smallscreen ? ".2rem" : "1rem", marginTop: "2rem" }}
+    >
       {user && (
-        <Grid container mt={5} p={1}>
+        <Grid
+          container
+          mt={5}
+          style={{ padding: smallscreen ? "0rem" : "1rem" }}
+        >
           <Grid item xs={12}>
-            <Box display="flex" flexDirection="column" mb={3}>
+            <Box display="flex" flexDirection="column" mb={3} ml={2}>
               <Typography variant="h5">Posts</Typography>
               <hr width="125px" />
             </Box>

@@ -3,8 +3,8 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles((theme) => ({
   container: {
-    position: "absolute",
-    background: "white",
+    position: "fixed",
+    background: theme.palette.background.paper,
     textAlign: "center",
     border: "1px solid",
     padding: "1rem",
@@ -31,18 +31,6 @@ export const useStyles = makeStyles((theme) => ({
     minWidth: "80%",
     display: "flex",
     flexDirection: "column",
-    /* [theme.breakpoints.up("xs")]: {
-      width: "90vw",
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: "65vw",
-    },
-    [theme.breakpoints.up("md")]: {
-      width: "40vw",
-    },
-    [theme.breakpoints.up("lg")]: {
-      width: "35vw",
-    }, */
   },
 
   image: {

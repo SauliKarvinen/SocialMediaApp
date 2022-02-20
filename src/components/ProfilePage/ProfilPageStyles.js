@@ -29,13 +29,32 @@ export const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
   },
 
-  gridNameHeader: {
+  showGridNameHeader: {
     position: "-webkit-sticky",
     position: "sticky",
-    top: "4rem",
     background: "white",
     paddingTop: "1rem",
     zIndex: 1000,
+    top: "4rem",
+    opacity: 1,
+    transition: "0.3s linear",
+    [theme.breakpoints.down("sm")]: {
+      top: "3.5rem",
+    },
+  },
+
+  hideGridNameHeader: {
+    position: "-webkit-sticky",
+    position: "sticky",
+    background: "white",
+    paddingTop: "1rem",
+    zIndex: 1000,
+    top: "4rem",
+    opacity: 0,
+    transition: "0.3s linear",
+    [theme.breakpoints.down("sm")]: {
+      top: "3.5rem",
+    },
   },
 
   infoContainer: {

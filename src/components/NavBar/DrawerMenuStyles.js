@@ -12,8 +12,6 @@ export const useStyles = makeStyles((theme) => ({
 
   drawerlist: {
     width: "200px",
-    /* position: "relative",
-    top: "60px", */
     background: "#fafcfc",
   },
   listitem: {

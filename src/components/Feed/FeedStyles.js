@@ -24,11 +24,8 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   feedheadercontainer: {
-    position: "fixed",
     background: "white",
     width: "49.5vw",
-
-    paddingTop: "1rem",
     [theme.breakpoints.up("xs")]: {
       width: "74vw",
     },
@@ -46,13 +43,16 @@ export const useStyles = makeStyles((theme) => ({
   gridcontainer: {
     minHeight: "100%",
     justifyContent: "space-around",
-
-    [theme.breakpoints.up("lg")]: {
-      marginTop: "5rem",
-    },
+    marginTop: ".5rem",
   },
 
-  gridheaders: {},
+  gridheaders: {
+    position: "sticky",
+    background: "white",
+    zIndex: 800,
+    paddingTop: ".5rem",
+    top: "4rem",
+  },
 
   hr: {
     width: "100%",
@@ -78,9 +78,12 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     padding: "2px",
-    marginTop: "1.4rem",
-    [theme.breakpoints.down("lg")]: {
-      marginTop: "5rem",
-    },
+  },
+
+  smallscreenHeader: {
+    position: "sticky",
+    background: "white",
+    top: "3rem",
+    paddingTop: "1rem",
   },
 }));

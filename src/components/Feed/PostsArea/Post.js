@@ -1,11 +1,10 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Box,
   Button,
   Card,
   CardContent,
-  CardHeader,
   Grid,
   IconButton,
   InputAdornment,
@@ -23,20 +22,25 @@ export const Post = ({ post }) => {
   const [showComments, setShowComments] = useState();
   const [comment, setComment] = useState("");
   const [postData, setPostData] = useState(post);
+  const [commentsStartpoint, setCommentsStartpoint] = useState();
   const classes = useStyles();
   const { loggedInUser } = useAppContext();
   const theme = useTheme();
+  const postContainerRef = useRef(null);
 
+  // Set post data on post change
   useEffect(() => {
     if (post) {
       setPostData(post);
     }
   }, [post]);
 
+  // handle comment
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
 
+  // send comment
   const sendComment = () => {
     if (comment.length > 1) {
       let commentsArr = postData.comments;
@@ -44,18 +48,38 @@ export const Post = ({ post }) => {
       const format = new Date(time);
       const newComment = {
         user: loggedInUser,
-        time: format.toDateString(),
+        time: format.toLocaleString(),
         text: comment,
       };
       commentsArr.push(newComment);
       setPostData({ ...postData, comments: commentsArr });
       setComment("");
     }
+  };
 
-    //const newpost = new UserPost(post);
+  // scroll back to initial window point when comment section is closed
+  const handleShowCommentsClick = (e) => {
+    if (!showComments) {
+      setCommentsStartpoint(window.scrollY);
+    }
+
+    if (showComments) {
+      window.scrollTo({
+        top: commentsStartpoint,
+        behavior: "auto",
+      });
+    }
+    setShowComments(!showComments);
   };
   return (
-    <Card style={{ marginBottom: "4rem" }} elevation={3}>
+    <Card
+      ref={postContainerRef}
+      style={{
+        marginBottom: "4rem",
+        background: theme.palette.background.paper,
+      }}
+      elevation={3}
+    >
       <CardContent>
         <Grid container p={2}>
           <Grid
@@ -152,7 +176,7 @@ export const Post = ({ post }) => {
             </Box>
           </CardContent>
         </Grid>
-        <Box display="flex" justifyContent="center" mb={3}>
+        {/* <Box display="flex" justifyContent="center" mb={3}>
           <Button onClick={() => setShowComments(!showComments)}>
             {showComments ? (
               <Typography variant="body2">Hide comments</Typography>
@@ -162,33 +186,7 @@ export const Post = ({ post }) => {
               </Typography>
             )}
           </Button>
-        </Box>
-        {/* LEAVE A COMMENT */}
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          style={{ width: "100%" }}
-          gap={1}
-          mb={2}
-        >
-          <TextField
-            style={{ width: "90%" }}
-            placeholder={`Leave a comment to ${postData.user.name}!`}
-            value={comment}
-            onChange={handleCommentChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" color="primary" onClick={sendComment}>
-                    <SendIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          ></TextField>
-        </Box>
-
+        </Box> */}
         {showComments && (
           <Box display="flex" flexDirection="column" width="90%" pl={4} pb={4}>
             <Typography variant="body2">Comments</Typography>
@@ -271,6 +269,42 @@ export const Post = ({ post }) => {
               ))}
           </Box>
         )}
+        {/* LEAVE A COMMENT */}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          style={{ width: "100%" }}
+          gap={1}
+          mb={2}
+        >
+          <TextField
+            style={{ width: "90%" }}
+            placeholder={`Leave a comment to ${postData.user.name}!`}
+            value={comment}
+            onChange={handleCommentChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton edge="end" color="primary" onClick={sendComment}>
+                    <SendIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          ></TextField>
+          <Box display="flex" justifyContent="center" mb={3}>
+            <Button onClick={handleShowCommentsClick}>
+              {showComments ? (
+                <Typography variant="body2">Hide comments</Typography>
+              ) : (
+                <Typography>
+                  Show comments ({postData.comments.length})
+                </Typography>
+              )}
+            </Button>
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );

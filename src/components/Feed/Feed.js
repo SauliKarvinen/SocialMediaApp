@@ -17,16 +17,34 @@ import PeopleIcon from "@mui/icons-material/People";
 // Feed page
 export const Feed = ({ menuitems }) => {
   const [newPost, setNewPost] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
+  const [scroll, setScroll] = useState(0);
   const classes = useStyles();
   const theme = useTheme();
   const smallscreen = useMediaQuery(theme.breakpoints.down("lg"));
-  const xlscreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const xsscreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { contacts } = useAppContext();
 
   // On page load, scroll to top of the page
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  // scroll listener
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scroll]);
+
+  // Hide feed header on scroll down
+  const handleScroll = () => {
+    if (window.scrollY > scroll && window.scrollY > 80) setShowHeader(false);
+    else {
+      if (window.scrollY < scroll) setShowHeader(true);
+    }
+    setScroll(window.scrollY);
+  };
 
   // New post - true, all components behind NewPost component will hace reduced opacity
   const createNewPost = () => {
@@ -47,60 +65,84 @@ export const Feed = ({ menuitems }) => {
         >
           <NavBar menuitems={menuitems} style={{ position: "fixed" }} />
           <Box>
-            <Box
-              style={{
-                width: "100vw",
-                height: "5.5rem",
-                background: "white",
-                position: "fixed",
-              }}
-            ></Box>
             <Grid
               container
               justifyContent="center"
-              style={{ height: "4rem", paddingTop: ".5rem" }}
+              style={{
+                paddingTop: ".5rem",
+              }}
             >
-              <Grid item xs={0} sm={1}></Grid>
-              <Grid item xs={9} display="flex" style={{ background: "white" }}>
-                <Box
-                  flexDirection="column"
-                  className={classes.feedheadercontainer}
-                  style={{ background: "white" }}
-                >
-                  <Box display="flex" alignItems="center">
-                    <Typography variant="h5" mb={1} pt={1}>
-                      Feed
-                    </Typography>
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      marginLeft="auto"
-                    >
-                      <Button variant="outlined" onClick={createNewPost}>
-                        <CommentIcon />
-                        <Typography ml={2}>New Post</Typography>
-                      </Button>
+              <Grid
+                container
+                sx={{
+                  position: "sticky",
+                  top: "3rem",
+                  paddingTop: "1rem",
+                  background: "white",
+                  transition: "0.3s linear",
+                  opacity: showHeader ? 1 : 0,
+                }}
+              >
+                <Grid item xs={9} sm={1}></Grid>
+                <Grid item xs={9} display="flex">
+                  <Box
+                    flexDirection="column"
+                    className={classes.feedheadercontainer}
+                    style={{
+                      minWidth: "100%",
+                    }}
+                  >
+                    <Box display="flex" alignItems="center" ml={1}>
+                      <Typography variant="h5" mb={1} pt={1}>
+                        Feed
+                      </Typography>
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        marginLeft="auto"
+                      >
+                        <Button
+                          variant="outlined"
+                          onClick={createNewPost}
+                          style={{
+                            /* maxWidth: xsscreen ? "80%" : "100%", */
+                            transform: xsscreen ? "scale(0.8)" : "scale(1.0)",
+                          }}
+                        >
+                          <CommentIcon />
+                          <Typography
+                            ml={2}
+                            style={{ fontSize: xsscreen ? "0.8em" : "1em" }}
+                          >
+                            New Post
+                          </Typography>
+                        </Button>
+                      </Box>
                     </Box>
+                    <hr width="100%" />
                   </Box>
-                  <hr width="100%" />
-                </Box>
-              </Grid>
-              <Grid item xs={1} style={{ background: "white" }}>
-                <ContactsDrawer contacts={contacts} />
-              </Grid>
-              <Grid item xs={12}>
-                <div
+                </Grid>
+                <Grid
+                  item
+                  xs={1}
                   style={{
-                    width: "100vw",
-                    height: "2rem",
                     background: "white",
-                    position: "fixed",
-                    top: "5rem",
-                    opacity: 0.9,
+                    position: "sticky",
+                    top: "4rem",
                   }}
-                ></div>
+                ></Grid>
               </Grid>
-              <Grid item xs={12} sm={10} md={9}>
+              <Box
+                style={{
+                  background: "white",
+                  position: "absolute",
+                  right: "10px",
+                  top: "10x",
+                }}
+              >
+                <ContactsDrawer contacts={contacts} />
+              </Box>
+              <Grid item xs={12} sm={10} md={9} mt={3}>
                 <Box
                   style={{
                     width: "100%",
@@ -120,137 +162,119 @@ export const Feed = ({ menuitems }) => {
           style={{ opacity: newPost ? 0.5 : 1.0 }}
         >
           <NavBar menuitems={menuitems} style={{ position: "fixed" }} />
-          <Box className={classes.gridheaders}>
-            <Grid container justifyContent="space-around">
-              <Grid item xs={2}>
-                <Box
-                  style={{
-                    position: "fixed",
-                    width: "16vw",
-                    paddingTop: "1rem",
-                  }}
-                >
-                  <Typography variant="h5" mb={1} pt={2}>
-                    Menu
+
+          <Grid
+            container
+            justifyContent="space-around"
+            className={classes.gridheaders}
+          >
+            <Grid item xs={2}>
+              <Box>
+                <Typography variant="h5" mb={1}>
+                  Menu
+                </Typography>
+                <hr width="100%" />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                display="flex"
+                flexDirection="column"
+                className={classes.feedheadercontainer}
+              >
+                <Box display="flex" alignItems="center">
+                  <Typography variant="h5" mb={1}>
+                    Feed
                   </Typography>
-                  <hr width="100%" />
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  className={classes.feedheadercontainer}
-                  style={{ zIndex: 500 }}
-                >
-                  <Box display="flex" alignItems="center">
-                    <Typography variant="h5" mb={1} pt={2}>
-                      Feed
-                    </Typography>
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      marginLeft="auto"
-                    >
-                      <Button variant="outlined" onClick={createNewPost}>
-                        <CommentIcon />
-                        <Typography ml={2}>New Post</Typography>
-                      </Button>
-                    </Box>
+                  <Box display="flex" justifyContent="center" marginLeft="auto">
+                    <Button variant="outlined" onClick={createNewPost}>
+                      <CommentIcon />
+                      <Typography ml={2}>New Post</Typography>
+                    </Button>
                   </Box>
-                  <hr width="100%" />
                 </Box>
-              </Grid>
-              <Grid item xs={2}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  style={{
-                    position: "fixed",
-                    width: "16vw",
-                    paddingTop: "1rem",
-                  }}
-                >
-                  <Box display="flex">
-                    <Typography variant="h5" mb={1} pt={2}>
-                      Contacts
-                    </Typography>
-
-                    <PeopleIcon
-                      style={{
-                        transform: "scale(1.3)",
-                        marginLeft: "auto",
-                        marginTop: "0px",
-                        marginBottom: ".6rem",
-                        marginRight: ".5rem",
-                        alignSelf: "flex-end",
-
-                        color: theme.palette.primary.main,
-                      }}
-                    />
-                  </Box>
-                  <hr width="100%" />
-                </Box>
-              </Grid>
+                <hr width="100%" />
+              </Box>
             </Grid>
-            <Grid container className={classes.gridcontainer}>
-              <Grid item xs={2}>
-                <Paper
-                  elevation={2}
-                  style={{
-                    position: "fixed",
-                    width: "16vw",
-                    height: "75vh",
-                    marginTop: "1.5rem",
-                  }}
-                >
-                  <Box
+            <Grid item xs={2}>
+              <Box display="flex" flexDirection="column" width="100%">
+                <Box display="flex">
+                  <Typography variant="h5" mb={1}>
+                    Contacts
+                  </Typography>
+
+                  <PeopleIcon
                     style={{
-                      position: "fixed",
-                      boxSizing: "border-box",
-                      width: "16vw",
+                      transform: "scale(1.3)",
+                      marginLeft: "auto",
+                      marginTop: "0px",
+                      marginBottom: ".6rem",
+                      marginRight: ".5rem",
+                      alignSelf: "flex-end",
+                      color: theme.palette.primary.main,
                     }}
-                  >
-                    <NavigationArea menuitems={menuitems} feedPage={true} />
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid item xs={6}>
-                <div
-                  style={{
-                    width: xlscreen ? "47vw" : "50vw",
-                    height: "1.8rem",
-                    background: "white",
-                    position: "fixed",
-                    top: "8rem",
-                    opacity: 0.95,
-                    zIndex: 400,
-                  }}
-                ></div>
-                <Box
-                  className={classes.postsarea}
-                  style={{ paddingLeft: "4px" }}
-                >
-                  <PostsArea />
+                  />
                 </Box>
-              </Grid>
-              <Grid item xs={2} className={classes.contacts}>
-                <Paper
-                  elevation={2}
+                <hr width="100%" />
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <div
+                style={{
+                  width: "100%",
+                  height: "1.5rem",
+                  background: "white",
+                  position: "sticky",
+                  top: "8rem",
+                  opacity: 0.95,
+                  zIndex: 400,
+                }}
+              ></div>
+            </Grid>
+          </Grid>
+          <Grid container className={classes.gridcontainer}>
+            <Grid item xs={2}>
+              <Paper
+                elevation={2}
+                style={{
+                  position: "sticky",
+                  top: "9.5rem",
+                  height: "72vh",
+                  background: theme.palette.background.paper,
+                }}
+              >
+                <Box
                   style={{
-                    position: "fixed",
+                    boxSizing: "border-box",
                     width: "16vw",
-                    height: "75vh",
-                    marginTop: "1.5rem",
                   }}
                 >
-                  <Box className={classes.contactsarea} p={1}>
-                    <ContactsArea contacts={contacts} />
-                  </Box>
-                </Paper>
-              </Grid>
+                  <NavigationArea menuitems={menuitems} feedPage={true} />
+                </Box>
+              </Paper>
             </Grid>
-          </Box>
+            <Grid item xs={6}>
+              <Box className={classes.postsarea}>
+                <PostsArea />
+              </Box>
+            </Grid>
+            <Grid item xs={2} className={classes.contacts}>
+              <Paper
+                elevation={2}
+                style={{
+                  position: "sticky",
+                  top: "9.5rem",
+                  width: "100%",
+                  height: "72vh",
+                  background: theme.palette.background.paper,
+                }}
+              >
+                <Box className={classes.contactsarea} p={1}>
+                  <ContactsArea contacts={contacts} />
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
         </Box>
       )}
       {newPost && <NewPost showWindow={handleShowNewPostWindow} />}
