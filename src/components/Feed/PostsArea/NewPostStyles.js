@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles((theme) => ({
   container: {
-    position: "fixed",
+    position: "absolute",
     background: theme.palette.background.paper,
     textAlign: "center",
     border: "1px solid",
