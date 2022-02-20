@@ -46,6 +46,13 @@ export const ContextProvider = ({ children }) => {
         },
       },
 
+      body1: {
+        fontSize: "1rem",
+        [theme.breakpoints.down("sm")]: {
+          fontSize: "0.85rem",
+        },
+      },
+
       body2: {
         color: theme.palette.secondary.main,
         fontSize: "1.2rem",
@@ -66,7 +73,7 @@ export const ContextProvider = ({ children }) => {
       primary: { main: "#256fe6" },
       secondary: { main: "#5b5c5b" },
       background: {
-        paper: "#fbfbfb",
+        paper: "linear-gradient(45deg, #fff 60%, #fbfbfb 40%)",
       },
     },
   });

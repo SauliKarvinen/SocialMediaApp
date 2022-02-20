@@ -80,19 +80,22 @@ export const Feed = ({ menuitems }) => {
                   paddingTop: "1rem",
                   background: "white",
                   transition: "0.3s linear",
+                  zIndex: 999,
                   opacity: showHeader ? 1 : 0,
                 }}
               >
-                <Grid item xs={9} sm={1}></Grid>
-                <Grid item xs={9} display="flex">
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10} display="flex">
                   <Box
                     flexDirection="column"
                     className={classes.feedheadercontainer}
+                    ml={1}
                     style={{
                       minWidth: "100%",
+                      zIndex: 9999,
                     }}
                   >
-                    <Box display="flex" alignItems="center" ml={1}>
+                    <Box display="flex" alignItems="center">
                       <Typography variant="h5" mb={1} pt={1}>
                         Feed
                       </Typography>
@@ -100,13 +103,14 @@ export const Feed = ({ menuitems }) => {
                         display="flex"
                         justifyContent="center"
                         marginLeft="auto"
+                        mr={1}
                       >
                         <Button
                           variant="outlined"
                           onClick={createNewPost}
-                          style={{
+                          /* style={{
                             transform: xsscreen ? "scale(0.8)" : "scale(1.0)",
-                          }}
+                          }} */
                         >
                           <CommentIcon />
                           <Typography
@@ -121,17 +125,10 @@ export const Feed = ({ menuitems }) => {
                     <hr width="100%" />
                   </Box>
                 </Grid>
-                <Grid
-                  item
-                  xs={1}
-                  style={{
-                    background: "white",
-                    position: "sticky",
-                    top: "4rem",
-                  }}
-                ></Grid>
+                <Grid item xs={1}></Grid>
               </Grid>
-              <Box
+              {/* Future feature.. */}
+              {/* <Box
                 style={{
                   background: "white",
                   position: "absolute",
@@ -140,7 +137,7 @@ export const Feed = ({ menuitems }) => {
                 }}
               >
                 <ContactsDrawer contacts={contacts} />
-              </Box>
+              </Box> */}
               <Grid item xs={12} sm={10} md={9} mt={3}>
                 <Box
                   style={{
@@ -158,7 +155,9 @@ export const Feed = ({ menuitems }) => {
       ) : (
         <Box
           className={classes.feedcontainer}
-          style={{ opacity: newPost ? 0.5 : 1.0 }}
+          style={{
+            opacity: newPost ? 0.5 : 1.0,
+          }}
         >
           <NavBar menuitems={menuitems} style={{ position: "fixed" }} />
 

@@ -49,7 +49,7 @@ export const useStyles = makeStyles((theme) => ({
   gridheaders: {
     position: "sticky",
     background: "white",
-    zIndex: 800,
+    zIndex: 999,
     paddingTop: ".5rem",
     top: "4rem",
   },

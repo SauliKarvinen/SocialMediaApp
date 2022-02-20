@@ -7,6 +7,7 @@ import {
   InputAdornment,
   Paper,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useStyles } from "./MessagesPageStyles";
@@ -16,6 +17,7 @@ import { useTheme } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SendIcon from "@mui/icons-material/Send";
 import { Message } from "../ContextProvider/Message";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 // Messages page
 export const MessagesPage = ({ menuitems }) => {
@@ -25,7 +27,8 @@ export const MessagesPage = ({ menuitems }) => {
   const { contacts, loggedInUser } = useAppContext();
   const [filteredContacts, setFilteredContacts] = useState();
   const [filteredMessages, setFilteredMessages] = useState([]);
-  const [selectedUser, setSelectedUser] = useState();
+  const [showChat, setShowChat] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({ name: "" });
   const messagearea = useRef(null);
   const [inputvalue, setInputvalue] = useState("");
   const classes = useStyles();
@@ -39,15 +42,16 @@ export const MessagesPage = ({ menuitems }) => {
 
       if (filtered.length > 0) {
         setFilteredContacts(filtered);
-        fetchMessages(filtered[0]);
-        setSelectedUser(filtered[0]);
+        // Set active user on page load
+        /* fetchMessages(filtered[0]);
+        setSelectedUser(filtered[0]); */
       }
     }
   }, []);
 
   // When new user is selected, scrolls chat window to the end
   useEffect(() => {
-    if (messagearea.current.children.length > 1) {
+    if (messagearea && messagearea.current.children.length > 1) {
       messagearea.current.children[
         messagearea.current.children.length - 1
       ].scrollIntoView({});
@@ -58,8 +62,11 @@ export const MessagesPage = ({ menuitems }) => {
   const handleContactClick = (e) => {
     setSelectedUser(e);
     fetchMessages(e);
+
+    if (smallscreen) setShowChat(true);
   };
 
+  // Fetch messages
   const fetchMessages = (e) => {
     // filter messages between selected user and logged in user
     const filtered = loggedInUser.messages.filter(
@@ -72,10 +79,12 @@ export const MessagesPage = ({ menuitems }) => {
     setFilteredMessages(filtered);
   };
 
+  // message input handler
   const handleInputChange = (e) => {
     setInputvalue(e.target.value);
   };
 
+  // Adds new message
   const sendMessage = () => {
     if (inputvalue !== "") {
       const start = Date.now();
@@ -105,174 +114,395 @@ export const MessagesPage = ({ menuitems }) => {
     }
   };
 
+  // Small screen chat window - go back button
+  const handleGoBackClick = () => {
+    setShowChat(false);
+  };
+
   return (
     <Box className={classes.container}>
       <NavBar menuitems={menuitems} />
 
-      <Grid container className={classes.gridContainer}>
-        <Grid item xs={12}>
-          <Box display="flex" flexDirection="column">
-            <Typography variant="h5">Messages</Typography>
-            <hr />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={4} mt={3}>
-          <Typography variant="h6">Contacts</Typography>
-          <hr width="90%" />
-        </Grid>
-        {!smallscreen && (
-          <Grid item xs={12} sm={8} mt={3}>
-            <Typography variant="h6">Chat</Typography>
+      {smallscreen ? (
+        <Grid container className={classes.gridContainer}>
+          <Grid item xs={12}>
+            <Box display="flex" flexDirection="column">
+              <Typography variant="h5">Messages</Typography>
+              <hr />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={4} mt={3}>
+            <Typography variant="h6">Contacts</Typography>
             <hr width="90%" />
           </Grid>
-        )}
-        <Grid item xs={12} sm={4} mt={3}>
-          <Paper
-            style={{
-              width: "90%",
-              height: smallscreen ? "30vh" : "60vh",
-              overflow: smallscreen ? "scroll" : "initial",
-              padding: "1rem",
-            }}
-          >
-            <Typography variant="body2" color="secondary" mb={1}>
-              Click user card to show chat
-            </Typography>
-            {/* Render contacts */}
-            {filteredContacts &&
-              filteredContacts.map((contact, i) => (
-                <Paper
-                  className={classes.contactContainer}
-                  elevation={2}
-                  key={i}
-                  onClick={() => handleContactClick(contact)}
-                  style={{
-                    background:
-                      selectedUser.name === contact.name
-                        ? theme.palette.primary.main
-                        : "white",
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    maxWidth="100%"
-                    height="2.5rem"
-                    alignItems="center"
-                    gap={1}
-                    p={1}
-                  >
-                    <Box className={classes.imgborder} boxShadow={2}>
-                      <img
-                        src={contact.profileimg}
-                        className={classes.img}
-                        alt="profileimage"
-                      />
-                    </Box>
-
-                    <Typography
-                      style={{
-                        lineHeight: "1",
-                      }}
-                    >
-                      {contact.name}
-                    </Typography>
-                  </Box>
-                </Paper>
-              ))}
-          </Paper>
-        </Grid>
-        {smallscreen && (
-          <Grid item xs={12} sm={8} mt={3}>
-            <Typography variant="h6">Chat</Typography>
-            <hr width="50%" />
-          </Grid>
-        )}
-        <Grid item xs={12} sm={8} mt={3} display="flex" flexDirection="column">
-          <Paper
-            style={{
-              width: "90%",
-              height: "60vh",
-              overflow: "scroll",
-              height: smallscreen ? "90vh" : "60vh",
-              marginBottom: "1rem",
-            }}
-          >
-            {/* Render messages */}
-            <Box
-              ref={messagearea}
-              display="flex"
-              flexDirection="column"
-              rowGap={1}
-              p={1}
-              style={{ minHeight: "100%" }}
+          {!smallscreen && (
+            <Grid item xs={12} sm={8} mt={3}>
+              <Typography variant="h6">Chat</Typography>
+              <hr width="90%" />
+            </Grid>
+          )}
+          <Grid item xs={12} sm={4} mt={3}>
+            <Paper
+              style={{
+                width: "90%",
+                height: "7z0vh",
+                overflow: "scroll",
+                padding: "1rem",
+              }}
             >
-              {loggedInUser &&
-                selectedUser &&
-                filteredMessages.map((message, i) => (
+              <Typography variant="body2" color="secondary" mb={1}>
+                Click user card to show chat
+              </Typography>
+              {/* Render contacts */}
+              {filteredContacts &&
+                filteredContacts.map((contact, i) => (
                   <Paper
+                    className={classes.contactContainer}
+                    elevation={2}
                     key={i}
+                    onClick={() => handleContactClick(contact)}
                     style={{
-                      background: "aliceblue",
-                      padding: ".5rem",
-                      width: belowLargeScreen ? "80%" : "48%",
-                      textAlign: smallscreen ? "justify" : "initial",
-                      border: "1px solid",
-                      alignSelf:
-                        message.from.name === loggedInUser.name
-                          ? "flex-end"
-                          : "flex-start",
+                      background:
+                        selectedUser.name === contact.name
+                          ? theme.palette.primary.main
+                          : "white",
                     }}
                   >
-                    {message.to.name === loggedInUser.name && (
-                      <img
-                        src={message.from.profileimg}
+                    <Box
+                      display="flex"
+                      maxWidth="100%"
+                      height="2.5rem"
+                      alignItems="center"
+                      gap={1}
+                      p={1}
+                    >
+                      <Box className={classes.imgborder} boxShadow={2}>
+                        <img
+                          src={contact.profileimg}
+                          className={classes.img}
+                          alt="profileimage"
+                        />
+                      </Box>
+
+                      <Typography
                         style={{
-                          maxHeight: "3rem",
-                          maxWidth: "3rem",
-                          borderRadius: "50%",
-                          border: "1px solid",
+                          lineHeight: "1",
                         }}
-                        alt="profileimage"
-                      />
-                    )}
-                    <Typography variant="body1">{message.text}</Typography>
-                    <Box display="flex" justifyContent="flex-end">
-                      <Typography variant="body2" mt={1} mr={1}>
-                        {message.time}
+                      >
+                        {contact.name}
                       </Typography>
                     </Box>
                   </Paper>
                 ))}
-            </Box>
-            <TextField
-              style={{
-                width: "100%",
-                background: "white",
-                position: "sticky",
-                bottom: "0px",
-                padding: "1rem .5rem .5rem .5rem",
-              }}
-              placeholder="Type here"
-              className={classes.input}
-              value={inputvalue}
-              onChange={handleInputChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      color="primary"
-                      onClick={sendMessage}
-                    >
-                      <SendIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            ></TextField>
-          </Paper>
+            </Paper>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            mt={3}
+            display="flex"
+            flexDirection="column"
+          >
+            {showChat && (
+              <Paper
+                style={{
+                  position: "absolute",
+                  background: "white",
+                  top: "4rem",
+                  width: "92vw",
+                  minHeight: "88vh",
+                  maxHeight: "88vh",
+                  overflow: "scroll",
+                  margin: "auto",
+                }}
+              >
+                <Box
+                  style={{
+                    height: "3rem",
+                    background: theme.palette.background.paper,
+                    border: "1px solid gray",
+                    width: "100%",
+                    position: "sticky",
+                    top: "0px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Tooltip title="Go back">
+                    <Box ml={2} flexGrow={1} flexShrink={1}>
+                      <IconButton color="primary" onClick={handleGoBackClick}>
+                        <ArrowBackIosIcon />
+                      </IconButton>
+                    </Box>
+                  </Tooltip>
+                  <Box
+                    flexGrow={11}
+                    flexShrink={11}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography color="primary" variant="h5">
+                      {selectedUser.name}
+                    </Typography>
+                  </Box>
+                </Box>
+                {/* Render messages */}
+                <Box
+                  ref={messagearea}
+                  display="flex"
+                  flexDirection="column"
+                  rowGap={1}
+                  p={1}
+                  style={{ minHeight: "100%" }}
+                >
+                  {/* Map messages and place them according to sender */}
+                  {loggedInUser &&
+                    selectedUser &&
+                    filteredMessages.map((message, i) => (
+                      <Paper
+                        key={i}
+                        style={{
+                          background:
+                            message.from.name === loggedInUser.name
+                              ? "aliceblue"
+                              : theme.palette.background.paper,
+                          padding: ".5rem",
+                          width: belowLargeScreen ? "80%" : "48%",
+                          textAlign: smallscreen ? "justify" : "initial",
+                          border: "1px solid",
+                          alignSelf:
+                            message.from.name === loggedInUser.name
+                              ? "flex-end"
+                              : "flex-start",
+                        }}
+                      >
+                        {message.to.name === loggedInUser.name && (
+                          <img
+                            src={message.from.profileimg}
+                            style={{
+                              maxHeight: "3rem",
+                              maxWidth: "3rem",
+                              borderRadius: "50%",
+                              border: "1px solid",
+                            }}
+                            alt="profileimage"
+                          />
+                        )}
+                        <Typography variant="body1">{message.text}</Typography>
+                        <Box display="flex" justifyContent="flex-end">
+                          <Typography variant="body2" mt={1} mr={1}>
+                            {message.time}
+                          </Typography>
+                        </Box>
+                      </Paper>
+                    ))}
+                </Box>
+                <TextField
+                  style={{
+                    width: "100%",
+                    background: "white",
+                    position: "sticky",
+                    bottom: "0px",
+                    top: "100%",
+                    padding: "1rem .5rem 1rem .5rem",
+                  }}
+                  placeholder="Type here"
+                  className={classes.input}
+                  value={inputvalue}
+                  onChange={handleInputChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                          color="primary"
+                          onClick={sendMessage}
+                        >
+                          <SendIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                ></TextField>
+              </Paper>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      ) : (
+        <Grid container className={classes.gridContainer}>
+          <Grid item xs={12}>
+            <Box display="flex" flexDirection="column">
+              <Typography variant="h5">Messages</Typography>
+              <hr />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={4} mt={3}>
+            <Typography variant="h6">Contacts</Typography>
+            <hr width="90%" />
+          </Grid>
+          {!smallscreen && (
+            <Grid item xs={12} sm={8} mt={3}>
+              <Typography variant="h6">Chat</Typography>
+              <hr width="90%" />
+            </Grid>
+          )}
+          <Grid item xs={12} sm={4} mt={3}>
+            <Paper
+              style={{
+                width: "90%",
+                height: smallscreen ? "30vh" : "60vh",
+                overflow: smallscreen ? "scroll" : "initial",
+                padding: "1rem",
+              }}
+            >
+              <Typography variant="body2" color="secondary" mb={1}>
+                Click user card to show chat
+              </Typography>
+              {/* Render contacts */}
+              {filteredContacts &&
+                filteredContacts.map((contact, i) => (
+                  <Paper
+                    className={classes.contactContainer}
+                    elevation={2}
+                    key={i}
+                    onClick={() => handleContactClick(contact)}
+                    style={{
+                      background:
+                        selectedUser.name === contact.name
+                          ? theme.palette.primary.main
+                          : "white",
+                    }}
+                  >
+                    <Box
+                      display="flex"
+                      maxWidth="100%"
+                      height="2.5rem"
+                      alignItems="center"
+                      gap={1}
+                      p={1}
+                    >
+                      <Box className={classes.imgborder} boxShadow={2}>
+                        <img
+                          src={contact.profileimg}
+                          className={classes.img}
+                          alt="profileimage"
+                        />
+                      </Box>
+
+                      <Typography
+                        style={{
+                          lineHeight: "1",
+                        }}
+                      >
+                        {contact.name}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                ))}
+            </Paper>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            mt={3}
+            display="flex"
+            flexDirection="column"
+          >
+            <Paper
+              style={{
+                width: "90%",
+                height: "60vh",
+                overflow: "scroll",
+                height: smallscreen ? "90vh" : "60vh",
+                marginBottom: "1rem",
+              }}
+            >
+              {/* Render messages */}
+              <Box
+                ref={messagearea}
+                display="flex"
+                flexDirection="column"
+                rowGap={1}
+                p={1}
+                style={{ minHeight: "100%" }}
+              >
+                {loggedInUser &&
+                  selectedUser &&
+                  filteredMessages.map((message, i) => (
+                    <Paper
+                      key={i}
+                      style={{
+                        background: "aliceblue",
+                        padding: ".5rem",
+                        width: belowLargeScreen ? "80%" : "48%",
+                        textAlign: smallscreen ? "justify" : "initial",
+                        border: "1px solid",
+                        alignSelf:
+                          message.from.name === loggedInUser.name
+                            ? "flex-end"
+                            : "flex-start",
+                      }}
+                    >
+                      {message.to.name === loggedInUser.name && (
+                        <img
+                          src={message.from.profileimg}
+                          style={{
+                            maxHeight: "3rem",
+                            maxWidth: "3rem",
+                            borderRadius: "50%",
+                            border: "1px solid",
+                          }}
+                          alt="profileimage"
+                        />
+                      )}
+                      <Typography variant="body1">{message.text}</Typography>
+                      <Box display="flex" justifyContent="flex-end">
+                        <Typography variant="body2" mt={1} mr={1}>
+                          {message.time}
+                        </Typography>
+                      </Box>
+                    </Paper>
+                  ))}
+              </Box>
+              <TextField
+                style={{
+                  width: "100%",
+                  background: "white",
+                  position: "sticky",
+                  bottom: "0px",
+                  padding: "1rem .5rem 1rem .5rem",
+                }}
+                placeholder="Type here"
+                className={classes.input}
+                value={inputvalue}
+                onChange={handleInputChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        color="primary"
+                        onClick={sendMessage}
+                      >
+                        <SendIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              ></TextField>
+            </Paper>
+          </Grid>
+        </Grid>
+      )}
     </Box>
   );
 };
