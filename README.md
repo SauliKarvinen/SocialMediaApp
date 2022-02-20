@@ -17,7 +17,7 @@ Repositorio tulee sisältämään projektityön koodin, dokumentaation ja sivull
 
 ## Mistä näen oikean sivuston:
 
-<li>Sivusto tulee löytymään Netlify -palvelusta ja linkki sivustolle tulee tähän. Tämän repositorion ohjelma peilaa repositorion muutokset Netlify:hyn ja osoitteesta löytyy aina ajantasainen ohjelma </li>
+<li>https://someappi.netlify.app/ </li>
 
 <br />
 <hr />
