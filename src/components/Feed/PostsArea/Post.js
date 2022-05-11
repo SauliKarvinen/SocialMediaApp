@@ -124,7 +124,7 @@ export const Post = ({ post }) => {
                 }}
               >
                 <Link
-                  to={`/${postData.user.name}`}
+                  to={`/profile/${postData.user.name}`}
                   style={{
                     textDecoration: "none",
                     textDecorationColor: "black",
