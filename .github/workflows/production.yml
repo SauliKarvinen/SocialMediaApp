@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 19.x
       # Run npm install and build on our code
-      - run: npm install
+      - run: npm ci
       - run: npm run build --if-present
       # Deploy to Netlify using our production secrets
       - name: Deploy to netlify
